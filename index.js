@@ -1,13 +1,14 @@
-var express = require('express');
-var app = express();
-var fs = require("fs");
+var http = require('http'),
+    fs = require('fs');
 
-app.get('/', function (req, res) {
-    res.end("Get request worked!");
-})
 
-var server = app.listen(process.env.port || 8000, function () {
-   var host = server.address().address;
-   var port = server.address().port;
-   console.log("Example app listening at http://%s:%s", host, port);
-})
+fs.readFile('./index.html', function (err, html) {
+    if (err) {
+        throw err; 
+    }       
+    http.createServer(function(request, response) {  
+        response.writeHeader(200, {"Content-Type": "text/html"});  
+        response.write(html);  
+        response.end();  
+    }).listen(8000);
+});
