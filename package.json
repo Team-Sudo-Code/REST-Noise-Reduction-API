@@ -8,8 +8,8 @@
   },
   "devDependencies": {},
   "scripts": {
-    "test": "node index.js && exit 1",
-    "start": "node index.js && exit 1"
+    "test": "node index.js",
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
