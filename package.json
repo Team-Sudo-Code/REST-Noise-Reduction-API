@@ -20,8 +20,5 @@
   "bugs": {
     "url": "https://github.com/Team-Sudo-Code/Video-Noise-Reduction-API/issues"
   },
-  "homepage": "https://github.com/Team-Sudo-Code/Video-Noise-Reduction-API#readme",
-  "engines": {
-    "node": "10.x"
-  }
+  "homepage": "https://github.com/Team-Sudo-Code/Video-Noise-Reduction-API#readme"
 }
