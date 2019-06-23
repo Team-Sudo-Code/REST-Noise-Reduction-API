@@ -13,6 +13,6 @@ fs.readFile('./index.html', function (err, html) {
     }).listen(process.env.PORT || 8000);
 });
 
-app.get('/', function (req, res) {
+app.get('/test', function (req, res) {
     res.end("Get request worked!");
 })
