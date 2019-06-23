@@ -1,0 +1,27 @@
+{
+  "name": "video-noise-reduction-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "node index.js && exit 1",
+    "start": "node index.js && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Team-Sudo-Code/Video-Noise-Reduction-API.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Team-Sudo-Code/Video-Noise-Reduction-API/issues"
+  },
+  "homepage": "https://github.com/Team-Sudo-Code/Video-Noise-Reduction-API#readme",
+  "engines": {
+    "node": "10.x"
+  }
+}
