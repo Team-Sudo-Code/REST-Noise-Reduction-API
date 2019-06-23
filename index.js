@@ -1,4 +1,4 @@
-var http = require('http'),
+var http = require('http');
 var fs = require('fs');
 var request = require('request');
 var app = express();
