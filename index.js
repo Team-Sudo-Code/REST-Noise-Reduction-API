@@ -1,6 +1,7 @@
 var http = require('http'),
-    fs = require('fs');
-
+var fs = require('fs');
+var request = require('request');
+var app = express();
 
 fs.readFile('./index.html', function (err, html) {
     if (err) {
