@@ -4,17 +4,14 @@ var request = require('request');
 var express = require('express');
 var app = express();
 
-fs.readFile('./index.html', function (err, html) {
-    if (err) {
-        throw err; 
-    }       
-    http.createServer(function(request, response) {  
-        response.writeHeader(200, {"Content-Type": "text/html"});  
-        response.write(html);  
-        response.end();  
-    }).listen(process.env.PORT || 8000);
+app.get('/test', function (req, response) {
+    response.send("Test get request endpoint");
 });
 
-app.get('/test', function (req, res) {
-    res.end("Get request worked!");
-})
+app.get('/', function (req, response) {
+    response.send("Default get request page");
+});
+
+app.listen(process.env.PORT || 8000, () =>
+    console.log(`Example app listening on port ${process.env.PORT || 8000}!`),
+);
