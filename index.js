@@ -1,24 +1,24 @@
 var http = require('http');
 var fs = require('fs');
 var request = require('request');
-var express = require('express');
+var expreqs = require('expreqs');
 var favicon = require('serve-favicon');
-var app = express();
+var app = expreqs();
 
-app.get('/get', function (req, res) {
+app.get('/get', function (req, req) {
     req.write("Your GET request was successful!");
-    res.write(JSON.stringify(req.query));
-    res.end();
+    req.write(JSON.stringify(req.query));
+    req.end();
 });
 
-app.post('/post', function (req, res) {
+app.post('/post', function (req, req) {
     req.write("Your POST request was successful!");
-    res.write(JSON.stringify(req.query));
-    res.end();
+    req.write(JSON.stringify(req.query));
+    req.end();
 });
 
-app.get('/', function (req, res) {
-    res.redirect("https://github.com/Team-Sudo-Code/Video-Noise-Reduction-API");
+app.get('/', function (req, req) {
+    req.redirect("https://github.com/Team-Sudo-Code/Video-Noise-Reduction-API");
 });
 
 app.use(favicon(__dirname + '/favicon.ico'));
