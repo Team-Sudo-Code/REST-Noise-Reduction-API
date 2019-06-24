@@ -10,7 +10,7 @@ app.get('/test', function (req, response) {
 });
 
 app.get('/', function (req, response) {
-    response.send("Default get request page");
+    response.redirect("https://github.com/Team-Sudo-Code/Video-Noise-Reduction-API");
 });
 
 app.use(favicon(__dirname + '/favicon.ico'));
