@@ -1,5 +1,5 @@
 # REST-Noise-Reduction-API
-A REST API for denoising audio in videos.
+A REST API for denoising audio.
 
 ## Endpoints
 | Name | Type | Description |
