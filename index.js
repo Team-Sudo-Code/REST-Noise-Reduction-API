@@ -3,7 +3,7 @@ var fs = require('fs');
 var request = require('request');
 var expreqs = require('expreqs');
 var favicon = require('serve-favicon');
-var app = expreqs();
+var app = express();
 
 app.get('/get', function (req, req) {
     req.write("Your GET request was successful!");
