@@ -5,12 +5,20 @@ var express = require('express');
 var favicon = require('serve-favicon');
 var app = express();
 
-app.get('/test', function (req, response) {
-    response.send("Test get request endpoint");
+app.get('/get', function (req, res) {
+    req.write("Your GET request was successful!");
+    res.write(JSON.stringify(req.query));
+    res.end();
 });
 
-app.get('/', function (req, response) {
-    response.redirect("https://github.com/Team-Sudo-Code/Video-Noise-Reduction-API");
+app.post('/post', function (req, res) {
+    req.write("Your POST request was successful!");
+    res.write(JSON.stringify(req.query));
+    res.end();
+});
+
+app.get('/', function (req, res) {
+    res.redirect("https://github.com/Team-Sudo-Code/Video-Noise-Reduction-API");
 });
 
 app.use(favicon(__dirname + '/favicon.ico'));

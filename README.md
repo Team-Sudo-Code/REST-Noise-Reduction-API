@@ -4,4 +4,5 @@ A REST API for denoising audio.
 ## Endpoints
 | Name | Type | Description |
 |------|------|-------------|
-| [/test](https://audio-denoiser-api.herokuapp.com/test) | GET | The only current endpoint in this project. |
+| [/get](https://audio-denoiser-api.herokuapp.com/get) | GET | A test endpoint for GET. |
+| [/post](https://audio-denoiser-api.herokuapp.com/post) | POST | A test endpoint for POST |
