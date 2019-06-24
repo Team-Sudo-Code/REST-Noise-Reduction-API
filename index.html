@@ -1,0 +1,67 @@
+<title>Request Playground</title>
+<h1>Request Playground</h1>
+<p>You can open the developer console in this page to send requests.</p>
+<h2>
+Request function syntax:
+</h2>
+<p>request(relative-url, request-type, params);</p>
+<p>Returns a promise, containing the response.</p>
+<p>relative-url: a relative url of the endpoint.</p>
+<p>request-type: "GET" or "POST".</p>
+<p>params: the data sent in the request.<br /><strong>
+If the request-type is "GET", "params" must be a string in url encoding form. For "POST", the parameter is an object.
+</strong></p>
+<h2>Examples</h2>
+<pre>
+// POST Request
+request("post","POST",{test1:0,test2:1}).then(response=>{
+    console.log(response);
+});
+</pre>
+<pre>
+// GET Request
+request("get","GET","test1=0&test2=1").then(response=>{
+    console.log(response);
+});
+</pre>
+<script>
+    function request(url, type, params) {
+        return new Promise(function (resolve, reject) {
+            let xhr = new XMLHttpRequest();
+            type=type.toLowerCase();
+            type=(type=="post"?"post":"get");
+            xhr.open(type, url+(type=="post"?"":("?"+params)), true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == XMLHttpRequest.DONE && xhr.status >= 400) {
+                    let ress = xhr.response;
+                    if (typeof res.errorCode !== 'undefined') {
+                        reject(new Error('Something went wrong...'));
+                    }
+                }
+                if (xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
+                    let res = xhr.response;
+                    resolve(res);
+                }
+                if (xhr.readyState == 2) {
+                }
+            }
+            xhr.onload = function () {
+                let res = xhr.response;
+                resolve(res);
+            };
+            xhr.onerror = function () {
+                reject(new Error('error'));
+            };
+            body = JSON.stringify({ params });
+            xhr.send(body);
+        }).then(data=>{
+            return (JSON.parse(data));
+        });
+    }
+</script>
+<style>
+    * {
+        font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif; 
+    }
+</style>    
