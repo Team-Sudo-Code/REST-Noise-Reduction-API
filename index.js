@@ -1,7 +1,7 @@
 var http = require('http');
 var fs = require('fs');
 var request = require('request');
-var expreqs = require('expreqs');
+var expreqs = require('express');
 var favicon = require('serve-favicon');
 var app = express();
 
