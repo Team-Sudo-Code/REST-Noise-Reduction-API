@@ -11,14 +11,14 @@ Request function syntax:
 <p>params: the data (JSON) sent in the request.<br />
 <h2>Examples</h2>
 <pre>
-// POST Request
-request("/demo/post","POST",{test1:"hello",test2:"world"}).then(response=>{
+// GET Request
+request("/demo/get","GET",{test1:"hello",test2:"world"}).then(response=>{
     console.log(response);
 });
 </pre>
 <pre>
-// GET Request
-request("/demo/get","GET",{test1:"hello",test2:"world"}).then(response=>{
+// POST Request
+request("/demo/post","POST",{test1:"hello",test2:"world"}).then(response=>{
     console.log(response);
 });
 </pre>
@@ -66,5 +66,7 @@ request("/demo/get","GET",{test1:"hello",test2:"world"}).then(response=>{
 <style>
     * {
         font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif; 
+        color:white;
+        background-color:rgb(29,29,29);
     }
 </style>    
