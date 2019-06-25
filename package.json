@@ -1,5 +1,5 @@
 {
-  "name": "video-noise-reduction-api",
+  "name": "REST-noise-reduction-api",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -16,12 +16,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Team-Sudo-Code/Video-Noise-Reduction-API.git"
+    "url": "git+https://github.com/Team-Sudo-Code/REST-Noise-Reduction-API.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Team-Sudo-Code/Video-Noise-Reduction-API/issues"
+    "url": "https://github.com/Team-Sudo-Code/REST-Noise-Reduction-API/issues"
   },
-  "homepage": "https://github.com/Team-Sudo-Code/Video-Noise-Reduction-API#readme"
+  "homepage": "https://github.com/Team-Sudo-Code/REST-Noise-Reduction-API#readme"
 }

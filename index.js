@@ -8,18 +8,18 @@ var app = express();
 
 app.use(bodyParser.json());
 
-app.get('/get', function (req, res) {
+app.get('/demo/get', function (req, res) {
     res.json({
-        status: "Your GET request was successful!\nData received:\n" +
+        message: "Your GET request was successful!\nData received:\n" +
             JSON.stringify(req.query || {})
     });
     res.end();
 });
 
-app.post('/post', function (req, res) {
+app.post('/demo/post', function (req, res) {
     res.json({
-        status: "Your POST request was successful!\nData received:\n" +
-            JSON.stringify(req.body || {})
+        message: "Your POST request was successful!\nData received:\n" +
+            JSON.stringify((req.body || {"params":undefined}).params)
     });
     res.end();
 });
