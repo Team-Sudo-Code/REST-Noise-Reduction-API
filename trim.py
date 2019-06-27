@@ -2,7 +2,7 @@ from pydub import AudioSegment
 import glob
 import os
 import sys
-files = glob.glob(str(sys.argv[0])/*.wav*")
+files = glob.glob(str(sys.argv[0])+"/*.wav*")
 for file in files:
     newAudio = AudioSegment.from_wav(file)[0:10000]  # milliseconds
     # exports to a .wav file to a different path

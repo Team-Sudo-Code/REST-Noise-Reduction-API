@@ -1,7 +1,5 @@
-var http = require('http');
-var fs = require('fs');
-var request = require('request');
 var express = require('express');
+var pybackend = require("./callpython.js")
 var favicon = require('serve-favicon');
 var bodyParser = require('body-parser');
 var app = express();
@@ -15,7 +13,12 @@ app.get('/get', function (req, res) {
     });
     res.end();
 });
-
+app.get('/denoise', function (req, res) {
+    res.json({
+        status: "GUI for uploading audio to be denoised is not yet ready\n"
+    });
+    res.end();
+})
 app.post('/post', function (req, res) {
     res.json({
         status: "Your POST request was successful!\nData received:\n" +

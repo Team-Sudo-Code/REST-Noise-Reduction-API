@@ -25,4 +25,20 @@ function trimaudio(filetotrim) {
         }
     });
 }
+function reductnoise(filepath) {
+    const python_process = spawn("python", ["main.py", filepath]);
+    python_process.stdout.on('data', (data) => {
+        if (data.toString() == "0") { //TODO if there is a toint function, use that instead, i don't have intellisense right now :(
+            return 0;
+        }
+        else {
+            return 1;
+        }
+    });
+}
+module.exports = {
+    extractaudio,
+    trimaudio,
+    reductnoise
+}
 

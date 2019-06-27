@@ -35,7 +35,7 @@ request("get","GET","test1=0&test2=1").then(response=>{
             xhr.onreadystatechange = function () {
                 if (xhr.readyState == XMLHttpRequest.DONE && xhr.status >= 400) {
                     let ress = xhr.response;
-                    if (typeof res.errorCode !== 'undefined') {
+                    if (typeof ress.errorCode !== 'undefined') {
                         reject(new Error('Something went wrong...'));
                     }
                 }
@@ -53,7 +53,7 @@ request("get","GET","test1=0&test2=1").then(response=>{
             xhr.onerror = function () {
                 reject(new Error('error'));
             };
-            body = JSON.stringify({ params });
+            var body = JSON.stringify({ params });
             xhr.send(body);
         }).then(data=>{
             return (JSON.parse(data));
