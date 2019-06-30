@@ -12,6 +12,8 @@ function handleFileSelect(event) {
             console.log(data);
             fileByteArray = data.target.result;
             fileByteArray=new Uint8Array(fileByteArray);
+            window.promptBackup=window.prompt;
+            window.prompt=()=>{};
             var results = ffmpeg_run({
                 arguments: ("-i test.mp4 -ab 160k -ac 2 -ar 44100 -vn audio.wav").split(" "),
                 files: [
