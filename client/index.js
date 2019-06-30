@@ -26,6 +26,15 @@ function handleFileSelect(event) {
 
             results.forEach(function (file) {
                 console.log("File recieved", file.name, file.data);
+                (function saveByteArray(){
+                    console.log(file.data);
+                    var blob = new Blob([file.data], {type: "wav"});
+                    var link = document.createElement('a');
+                    link.href = window.URL.createObjectURL(blob);
+                    var fileName = file.name;
+                    link.download = fileName;
+                    link.click();
+                })();
             });
         };
         reader.readAsArrayBuffer(document.getElementById('fileInput').files[0]);
