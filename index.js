@@ -7,6 +7,8 @@ var bodyParser = require('body-parser');
 var app = express();
 
 app.use(bodyParser.json());
+app.use('/client', express.static(__dirname + '/client'));
+app.use('/libs', express.static(__dirname + '/libs'));
 
 app.get('/demo/get', function (req, res) {
     res.json({
