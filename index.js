@@ -27,9 +27,10 @@ app.post('/demo/post', function (req, res) {
     res.end();
 });
 
-app.post('/api', function (req, res) {
+app.post('/api/:key', function (req, res) {
     res.json({
-        message: "Your POST request was successful!\nBlob size: "+req.body.length
+        message: "Your POST request was successful!\nAPI key: "+req.params.key+"\nBlob size: "+req.body.length,
+        audio:req.body
     });
     res.end();
 });
