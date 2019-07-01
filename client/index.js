@@ -2,9 +2,50 @@ window.onload = () => {
     document.getElementById('fileInput').addEventListener('change', handleFileSelect, false);
 }
 
+function request(url, type, params) {
+    return new Promise(function (resolve, reject) {
+        let xhr = new XMLHttpRequest();
+        type=type.toLowerCase();
+        type=(type=="post"?"post":"get");
+        if(type=="get"){
+            params=Object.keys(params).map(function(k) {
+                return encodeURIComponent(k) + '=' + encodeURIComponent(params[k])
+            }).join('&');
+        }
+        xhr.open(type, url+(type=="post"?"":("?"+params)), true);
+        xhr.setRequestHeader('Content-type','application/octet-stream');
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == XMLHttpRequest.DONE && xhr.status >= 400) {
+                let res = xhr.response;
+                if (typeof res.errorCode !== 'undefined') {
+                    reject(new Error('Something went wrong...'));
+                }
+            }
+            if (xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
+                let res = xhr.response;
+                resolve(res);
+            }
+            if (xhr.readyState == 2) {
+            }
+        }
+        xhr.onload = function () {
+            let res = xhr.response;
+            resolve(res);
+        };
+        xhr.onerror = function () {
+            reject(new Error('error'));
+        };
+        params=new Blob([params],{type: 'application/octet-stream'});
+        console.log(params);
+        xhr.send(params);
+    }).then(data=>{
+        return (JSON.parse(data));
+    });
+}
+
 function handleFileSelect(event) {
     var fileByteArray;
-    (function handleFileSelect(event) {
+    (()=>{
         console.log(document.getElementById('fileInput').files[0]);
         const reader = new FileReader();
         reader.onerror = error => reject(error);
@@ -15,11 +56,11 @@ function handleFileSelect(event) {
             window.promptBackup=window.prompt;
             window.prompt=()=>{};
             var results = ffmpeg_run({
-                arguments: ("-i test.mp4 -ab 160k -ac 2 -ar 44100 -vn audio.wav").split(" "),
+                arguments: ("-i file.mp4 -ab 160k -ac 2 -ar 44100 -vn file.wav").split(" "),
                 files: [
                     {
                         data: fileByteArray,
-                        name: "test.mp4"
+                        name: "file.mp4"
                     }
                 ]
             });
@@ -27,13 +68,9 @@ function handleFileSelect(event) {
             results.forEach(function (file) {
                 console.log("File recieved", file.name, file.data);
                 (function saveByteArray(){
-                    console.log(file.data);
-                    var blob = new Blob([file.data], {type: "wav"});
-                    var link = document.createElement('a');
-                    link.href = window.URL.createObjectURL(blob);
-                    var fileName = file.name;
-                    link.download = fileName;
-                    link.click();
+                    request("/api/","post",file.data).then(data=>{
+                        console.log(data);
+                    });
                 })();
             });
         };
