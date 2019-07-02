@@ -44,10 +44,17 @@ function handleError(err) {
 }
 
 function handleFileSelect(event) {
+    var filename;
+    var lastIndex;
     var fileByteArray; // The byte array of the input video.
-    try{
-        console.log(document.getElementById('fileInput').files[0]); // the source file
-    }catch (err) {
+    try {
+        console.log(filename,document.getElementById('fileInput').files[0]); // the source file
+        filename = document.getElementById('fileInput').value;
+        lastIndex = filename.lastIndexOf("\\");
+        if (lastIndex >= 0) {
+            filename = filename.substring(lastIndex + 1);
+        }
+    } catch (err) {
         handleError(err);
     }
     const reader = new FileReader();
@@ -57,14 +64,14 @@ function handleFileSelect(event) {
             console.log(data);
             fileByteArray = new Uint8Array(data.target.result); // convert the data to a Uint8Array.
             window.promptBackup = window.prompt; //back up the prompt function.
-            window.prompt = () => {}; // disable the prompt function.
+            window.prompt = () => { }; // disable the prompt function.
             // use ffmpeg to separate audio from video.
             var results = ffmpeg_run({
-                arguments: ("-i file.mp4 -ab 256k -ac 2 -ar 44100 -vn audio.wav").split(" "),
+                arguments: ("-i "+filename+" -ab 256k -ac 2 -ar 44100 -vn audio.wav").split(" "),
                 files: [
                     {
                         data: fileByteArray,
-                        name: "file.mp4"
+                        name: filename
                     }
                 ]
             });
@@ -77,7 +84,7 @@ function handleFileSelect(event) {
                     // data.audio: the audio response from the server.
                     // use ffmpeg to join the audio and video files.
                     results = ffmpeg_run({
-                        arguments: ("-i file.mp4 -i audio.wav -c:v copy -map 0:v:0 -map 1:a:0 -strict -2 video.mp4").split(" "),
+                        arguments: ("-i "+filename+" -i audio.wav -c:v copy -map 0:v:0 -map 1:a:0 -strict -2 video.mp4").split(" "),
                         files: [
                             {
                                 data: data.audio.data,
@@ -85,7 +92,7 @@ function handleFileSelect(event) {
                             },
                             {
                                 data: fileByteArray,
-                                name: "file.mp4"
+                                name: filename
                             }
                         ]
                     });
@@ -94,13 +101,13 @@ function handleFileSelect(event) {
                     // download the file.
                     var link = document.createElement('a');
                     link.href = window.URL.createObjectURL(blob);
-                    link.download = "video.mp4";
+                    link.download = filename;
                     link.click();
                 }).catch(err => {
                     handleError(err);
                 });
             })();
-        }catch (err) {
+        } catch (err) {
             handleError(err);
         }
     };
