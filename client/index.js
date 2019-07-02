@@ -45,8 +45,12 @@ function handleError(err) {
 
 function handleFileSelect(event) {
     var fileByteArray; // The byte array of the input video.
+    var filename;
     try{
         console.log(document.getElementById('fileInput').files[0]); // the source file
+        filename=document.getElementById('fileInput').files[0].name;
+        filename=filename.replace(/ /gi,"_");
+        console.log(filename);
     }catch (err) {
         handleError(err);
     }
@@ -60,11 +64,11 @@ function handleFileSelect(event) {
             window.prompt = () => {}; // disable the prompt function.
             // use ffmpeg to separate audio from video.
             var results = ffmpeg_run({
-                arguments: ("-i file.mp4 -ab 256k -ac 2 -ar 44100 -vn audio.wav").split(" "),
+                arguments: ("-i "+filename+" -ab 256k -ac 2 -ar 44100 -vn audio.wav").split(" "),
                 files: [
                     {
                         data: fileByteArray,
-                        name: "file.mp4"
+                        name: filename
                     }
                 ]
             });
@@ -77,7 +81,7 @@ function handleFileSelect(event) {
                     // data.audio: the audio response from the server.
                     // use ffmpeg to join the audio and video files.
                     results = ffmpeg_run({
-                        arguments: ("-i file.mp4 -i audio.wav -c:v copy -map 0:v:0 -map 1:a:0 -strict -2 video.mp4").split(" "),
+                        arguments: ("-i "+filename+" -i audio.wav -c:v copy -map 0:v:0 -map 1:a:0 -strict -2 video.mp4").split(" "),
                         files: [
                             {
                                 data: data.audio.data,
@@ -85,16 +89,16 @@ function handleFileSelect(event) {
                             },
                             {
                                 data: fileByteArray,
-                                name: "file.mp4"
+                                name: filename
                             }
                         ]
                     });
                     var bytes = new Uint8Array(results[0].data); // pass your byte response to this constructor
-                    var blob = new Blob([bytes], { type: "mp4" });// change resultByte to bytes
+                    var blob = new Blob([bytes], { type: filename.split(".").pop() });// change resultByte to bytes
                     // download the file.
                     var link = document.createElement('a');
                     link.href = window.URL.createObjectURL(blob);
-                    link.download = "video.mp4";
+                    link.download = "Denoised-"+filename;
                     link.click();
                 }).catch(err => {
                     handleError(err);
