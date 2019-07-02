@@ -1,7 +1,9 @@
+// start processing when the file is uploaded.
 window.onload = () => {
     document.getElementById('fileInput').addEventListener('change', handleFileSelect, false);
 }
 
+// the request function used to send buffers to the server.
 function request(url, buffer) {
     return new Promise(function (resolve, reject) {
         let xhr = new XMLHttpRequest();
@@ -36,22 +38,27 @@ function request(url, buffer) {
     });
 }
 
+// use custom error functions.
 function handleError(err) {
-    console.log(err);
+    throw new Error(err);
 }
 
 function handleFileSelect(event) {
     var fileByteArray; // The byte array of the input video.
-    console.log(document.getElementById('fileInput').files[0]);
+    try{
+        console.log(document.getElementById('fileInput').files[0]); // the source file
+    }catch (err) {
+        handleError(err);
+    }
     const reader = new FileReader();
     reader.onerror = error => reject(error);
     reader.onload = data => {
         try {
             console.log(data);
-            fileByteArray = data.target.result;
-            fileByteArray = new Uint8Array(fileByteArray);
-            window.promptBackup = window.prompt;
-            window.prompt = () => { };
+            fileByteArray = new Uint8Array(data.target.result); // convert the data to a Uint8Array.
+            window.promptBackup = window.prompt; //back up the prompt function.
+            window.prompt = () => {}; // disable the prompt function.
+            // use ffmpeg to separate audio from video.
             var results = ffmpeg_run({
                 arguments: ("-i file.mp4 -ab 256k -ac 2 -ar 44100 -vn audio.wav").split(" "),
                 files: [
@@ -61,10 +68,14 @@ function handleFileSelect(event) {
                     }
                 ]
             });
-            var file = results[0];
+            var file = results[0]; // get the output audio file.
             console.log("File recieved", file.name, file.data);
             (function saveByteArray() {
+                // send a request to the server.
                 request("/api/apikey", file.data).then(data => {
+                    // data.message: the status message of the request.
+                    // data.audio: the audio response from the server.
+                    // use ffmpeg to join the audio and video files.
                     results = ffmpeg_run({
                         arguments: ("-i file.mp4 -i audio.wav -c:v copy -map 0:v:0 -map 1:a:0 -strict -2 video.mp4").split(" "),
                         files: [
@@ -80,6 +91,7 @@ function handleFileSelect(event) {
                     });
                     var bytes = new Uint8Array(results[0].data); // pass your byte response to this constructor
                     var blob = new Blob([bytes], { type: "mp4" });// change resultByte to bytes
+                    // download the file.
                     var link = document.createElement('a');
                     link.href = window.URL.createObjectURL(blob);
                     link.download = "video.mp4";
@@ -88,11 +100,11 @@ function handleFileSelect(event) {
                     handleError(err);
                 });
             })();
-        } catch (err) {
+        }catch (err) {
             handleError(err);
         }
     };
-    reader.readAsArrayBuffer(document.getElementById('fileInput').files[0]);
+    reader.readAsArrayBuffer(document.getElementById('fileInput').files[0]); // read the file.
 
 }
 
