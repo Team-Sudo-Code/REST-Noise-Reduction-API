@@ -16,6 +16,9 @@ A REST API for denoising audio.
     ```
 > Alternatively, you can visit [the Heroku app](https://audio-denoiser-api.herokuapp.com/).
 
+## API Demo
+You can try the API demo [here](https://audio-denoiser-api.herokuapp.com/client)!
+
 ## Request Playground
 You can use the [request playground](https://audio-denoiser-api.herokuapp.com/) to try requests!
 
@@ -24,3 +27,4 @@ You can use the [request playground](https://audio-denoiser-api.herokuapp.com/) 
 |------|------|-------------|
 | [/demo/get](https://audio-denoiser-api.herokuapp.com/demo/get) | GET | A test endpoint for GET. |
 | [/demo/post](https://audio-denoiser-api.herokuapp.com/demo/post) | POST | A test endpoint for POST. |
+| [/api/{API KEY HERE}](https://audio-denoiser-api.herokuapp.com/api/apikey) | POST | The endpoint for the API. You should send your audio data here. |
